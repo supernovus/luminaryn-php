@@ -1,0 +1,31 @@
+FROM luminaryn/php:7-core
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  git subversion make g++ curl chrpath wget bzip2 python2.7 \
+  && ln -sf /usr/bin/python2.7 /usr/bin/python \
+  && git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /tmp/depot_tools \
+  && export PATH="$PATH:/tmp/depot_tools" \
+  && cd /usr/local/src && fetch v8 && cd v8 \
+  && git checkout 7.5.288.23 \
+  && gclient sync \
+  && export GYPFLAGS="-Dv8_use_external_startup_data=0" \
+  && export GYPFLAGS="${GYPFLAGS} -Dlinux_use_bundled_gold=0" \
+  && tools/dev/v8gen.py -vv x64.release -- \
+  v8_use_external_startup_data=false \  
+  is_component_build=true \
+  use_custom_libcxx=false \
+  && ninja -C out.gn/x64.release/ \
+  && cp out.gn/x64.release/lib*.so out.gn/x64.release/icudtl.dat /usr/local/lib \
+  && cp -R include/* /usr/local/include/ \
+  && chrpath -r '$ORIGIN' /usr/local/lib/libv8.so \
+  && git clone https://github.com/phpv8/v8js.git /usr/local/src/v8js \
+  && cd /usr/local/src/v8js \
+  && git checkout php7 \
+  && phpize \
+  && ./configure --with-v8js=/usr/local \
+  && export NO_INTERACTION=1 && make all -j4 && make test install \
+  && docker-php-ext-enable v8js \
+  && cd /tmp && rm -rf /tmp/depot_tools /usr/local/src/v8 /usr/local/src/v8js \
+  && apt-get remove -y git subversion python2.7 chrpath wget \
+  && apt-get autoremove -y \
+  && apt-get clean
+

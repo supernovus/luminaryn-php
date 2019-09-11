@@ -1,0 +1,5 @@
+FROM luminaryn/php:7-core
+RUN apt-get update && apt-get install -y libmariadbclient-dev-compat \
+    && apt-get clean \
+    && docker-php-ext-install -j$(nproc) mysqli pdo_mysql
+
