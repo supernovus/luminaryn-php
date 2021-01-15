@@ -7,11 +7,12 @@ RUN apt-get update && apt-get install -y \
         libssl-dev \
         libbz2-dev \
         libzip-dev \
+        libonig-dev \
         libyaml-dev \
     && apt-get clean \
     && docker-php-ext-install -j$(nproc) mbstring opcache \
     && docker-php-ext-install -j$(nproc) bz2 zip \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && pecl install yaml \
     && docker-php-ext-enable yaml
