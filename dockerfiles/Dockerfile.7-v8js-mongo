@@ -1,4 +1,5 @@
-FROM luminaryn/php:7-core
+FROM luminaryn/php:7-v8js
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
+
 

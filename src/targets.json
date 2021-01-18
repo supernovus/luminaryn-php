@@ -1,0 +1,44 @@
+{
+  "core":
+  {
+    "use": ["core"]
+  },
+  "v8js":
+  {
+    "from": "core",
+    "if":
+    [
+      {"ver": "7", "use": ["v8js-php7"]}
+    ]
+  },
+  "mongo":
+  {
+    "from": "core",
+    "use": ["mongo"]
+  },
+  "mysql":
+  {
+    "from": "core",
+    "use": ["mysql"]
+  },
+  "pgsql":
+  {
+    "from": "core",
+    "use": ["pgsql"]
+  },
+  "v8js-mongo":
+  {
+    "from": "v8js",
+    "use": ["mongo"]
+  },
+  "v8js-mysql":
+  {
+    "from": "v8js",
+    "use": ["mysql"]
+  },
+  "v8js-pgsql":
+  {
+    "from": "v8js",
+    "use": ["pgsql"]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "output_path": "./dockerfiles",
+  "docker_name": "luminaryn/php",
+  "php_versions":
+  {
+    "7": {"repo": "php:7-fpm"},
+    "8": {"repo": "php:8-fpm"}
+  },
+  "docker_cmd": "sudo docker",
+  "pull_images": false,
+  "build_image": false,
+  "push_image": false
+}

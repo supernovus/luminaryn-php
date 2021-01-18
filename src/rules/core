@@ -1,0 +1,17 @@
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng-dev \
+        libssl-dev \
+        libbz2-dev \
+        libzip-dev \
+        libonig-dev \
+        libyaml-dev \
+    && apt-get clean \
+    && docker-php-ext-install -j$(nproc) mbstring opcache \
+    && docker-php-ext-install -j$(nproc) bz2 zip \
+    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
+    && pecl install yaml \
+    && docker-php-ext-enable yaml
