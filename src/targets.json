@@ -26,6 +26,11 @@
     "from": "core",
     "use": ["pgsql"]
   },
+  "huri":
+  {
+    "from": "mongo",
+    "use": ["huri"]
+  },
   "v8js-mongo":
   {
     "from": "v8js",
